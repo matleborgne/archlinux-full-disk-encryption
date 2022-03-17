@@ -170,7 +170,7 @@ echo $USER" ALL=(ALL) ALL" >> /etc/sudoers.d/$USER
 
 ```
 
-#### Full disk encryption
+#### Full disk encryption in GRUB configuration
 
 Here is the tricky step : the GRUB configuration for full disk encryption, including /boot
 
@@ -183,3 +183,14 @@ pacman -S --noconfirm --needed \
 # State of our system
 lsblk -o UUID,NAME,LABEL,MOUNTPOINTS
 ```
+The first part is to generate the classic configuration files
+
+```python
+# Initramfs generation
+mkinitcpio -P
+
+# GRUB installation
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux --recheck $EFI_PART
+grub-mkconfig -o /boot/grub/grub.cfg
+```
+
