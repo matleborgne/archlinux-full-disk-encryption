@@ -229,3 +229,11 @@ MODULES=(btrfs)
 FILES=("/etc/keys/keyfile.key")
 HOOKS=(base udev autodetect modconf block encrypt filesystems keyboard fsck grub-btrfs-overlayfs)
 ```
+
+Finally, we need to regenerate the files with correct configuration.
+```python
+mkinitcpio -P
+
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux --recheck $EFI_PART --removable
+grub-mkconfig -o /boot/grub/grub.cfg
+```
