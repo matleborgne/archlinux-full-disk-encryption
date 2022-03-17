@@ -27,8 +27,8 @@ Then, we have to :
 - create the subvolumes,
 - and remount it correctly.
 
-Note that we need to create each subfolder of our root filesystem, like /home, /var, etc.
-Thus we can create as many subvolumes as we need.
+Note that we need to create each subfolder of our root filesystem, like /home, /var, etc.  
+Thus we can create as many subvolumes as we need (like /var, /var/log, /var/tmp, etc.)
 
 ```python
 # CHANGE THIS WITH YOUR DATA
