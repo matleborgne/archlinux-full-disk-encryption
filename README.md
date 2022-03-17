@@ -8,7 +8,7 @@ If you want an **encrypted boot**, you have to choose the **luks1** type, as GRU
 Then, inside this encrypted partition, we create a BTRFS filesystem.
 
 ```python
-
+# CHANGE THIS WITH YOUR DATA
 CRYPT="/dev/nvme0n1p2"
 CLEAR="luksRoot"
 
