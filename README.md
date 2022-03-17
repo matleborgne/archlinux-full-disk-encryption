@@ -9,15 +9,15 @@ Then, inside this encrypted partition, we create a BTRFS filesystem.
 
 ```python
 # CHANGE THIS WITH YOUR DATA
-CRYPT="/dev/nvme0n1p2"
-CLEAR="luksRoot"
+DISK_NAME="/dev/sda2"
+MAP_NAME="luksRoot"
 
 # LUKS encryption
 cryptsetup luksFormat --type luks1 $CRYPT
-cryptsetup luksOpen $CRYPT $CLEAR
+cryptsetup luksOpen $CRYPT $MAP_NAME
 
 # BTRFS formatting
-mkfs.btrfs /dev/mapper/$CLEAR
+mkfs.btrfs /dev/mapper/$MAP_NAME
 ```
 
 #### Create BTRFS subvolumes and correctly mount on /mnt
@@ -27,10 +27,15 @@ Then, we have to :
 - create the subvolumes,
 - and remount it correctly.
 
+Note that the UEFI partition cannot be encrypted, and has to be formatted in FAT.
+
 ```python
-# Options de montage BTRFS
+# CHANGE THIS WITH YOUR DATA
 BTRFS_OPTS="rw,noatime,ssd,compress=zstd,commit=120"
-DISK_NAME="/dev/sda2"
-MAP_NAME="luksRoot"
 EFI_PART="/dev/sda1"
+
+# First mount, to create the subvolumes
+mount /dev/mapper/$MAP_NAME /mnt
+
+
 ```
