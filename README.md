@@ -42,9 +42,6 @@ mount /dev/mapper/$MAP_NAME /mnt
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@snapshots
-btrfs subvolume create /mnt/@var_log
-btrfs subvolume create /mnt/@var_cache
-btrfs subvolume create /mnt/@var_tmp
 umount /mnt
 
 # Second mount, with correct options
@@ -58,13 +55,4 @@ mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/$MAP_NAME /mnt/.snapshots
 
 mkdir -p /mnt/boot/efi
 mount -o rw,noatime $EFI_PART /mnt/boot/efi
-
-mkdir -p /mnt/var/log
-mount -o $BTRFS_OPTS,subvol=@var_log /dev/mapper/$MAP_NAME /mnt/var/log
-mkdir -p /mnt/var/cache
-mount -o $BTRFS_OPTS,subvol=@var_cache /dev/mapper/$MAP_NAME /mnt/var/cache
-mkdir -p /mnt/var/tmp
-mount -o $BTRFS_OPTS,subvol=@var_tmp /dev/mapper/$MAP_NAME /mnt/var/tmp
-
-
 ```
