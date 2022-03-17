@@ -179,9 +179,6 @@ Here is the tricky step : the GRUB configuration for full disk encryption, inclu
 pacman -S --noconfirm --needed \
   grub efibootmgr efitools os-prober \
   grub-btrfs
-
-# State of our system
-lsblk -o UUID,NAME,LABEL,MOUNTPOINTS
 ```
 The first step is to generate the classic configuration files
 
@@ -195,9 +192,15 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 The, the manual configuration.  
-It could be done with **sed** commands, but here I prefer to do it manually to avoid mistakes...
+This step is crucial. Note :
+- UUID of your **encrypted** partition (/dev/sda2 for me)
+- UUID of your **mapped** volume (luksRoot)
 
 ```python
+# State of our system
+lsblk -o UUID,NAME,LABEL,MOUNTPOINTS
+# Note the UUID of your
+
 # Activate the ability of GRUB to decrypt LUKS-1 on boot
 echo "GRUB_ENABLE_CRYPTODISK=y" /etc/default/grub
 
