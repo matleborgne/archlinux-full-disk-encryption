@@ -49,10 +49,8 @@ mount -o $BTRFS_OPTS,subvol=@ /dev/mapper/$MAP_NAME /mnt
 
 mkdir -p /mnt/home
 mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/$MAP_NAME /mnt/home
-
 mkdir -p /mnt/.snapshots
 mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/$MAP_NAME /mnt/.snapshots
-
 mkdir -p /mnt/boot/efi
 mount -o rw,noatime $EFI_PART /mnt/boot/efi
 
