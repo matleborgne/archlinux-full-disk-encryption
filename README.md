@@ -37,7 +37,7 @@ EFI_PART="/dev/sda1"
 # First mount, to create the subvolumes
 mount /dev/mapper/$MAP_NAME /mnt
 
-# Creation of subvolumes, with naming format compatible with Timeshift
+# Creation of subvolumes, with naming format compatible with Timeshift backup tool for example
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@snapshots
