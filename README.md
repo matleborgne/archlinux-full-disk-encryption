@@ -39,9 +39,9 @@ EFI_PART="/dev/sda1"
 mount /dev/mapper/$MAP_NAME /mnt
 
 # Creation of subvolumes, with naming format compatible with Timeshift backup tool for example
-btrfs subvolume create /mnt/@ 
-btrfs subvolume create /mnt/@home 
-btrfs subvolume create /mnt/@snapshots  
+btrfs subvolume create /mnt/@
+btrfs subvolume create /mnt/@home
+btrfs subvolume create /mnt/@snapshots
 umount /mnt
 
 # Second mount, with correct options
@@ -51,8 +51,11 @@ mkdir -p /mnt/home
 mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/$MAP_NAME /mnt/home
 
 mkdir -p /mnt/.snapshots
-mount -o $BTRFS_OPTS,subvol=@snapshots  /dev/mapper/$MAP_NAME /mnt/.snapshots
+mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/$MAP_NAME /mnt/.snapshots
 
 mkdir -p /mnt/boot/efi
 mount -o rw,noatime $EFI_PART /mnt/boot/efi
+
+# We can check that everything in correctly mounted
+lsblk
 ```
