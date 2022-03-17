@@ -108,3 +108,15 @@ echo "127.0.0.1 localhost
 timedatectl set-ntp true
 hwclock --systohc
 ```
+
+#### Install our system
+
+We can now install the "system packages" we need for the system to work correctly.  
+This part is highly subjective, as you could need some other packages or not need some of them.
+
+```python
+# Filesystem packages
+pacman -S --noconfirm --needed \
+  ntfs-3g dosfstools usbutils sshfs
+
+```
