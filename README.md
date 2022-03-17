@@ -187,7 +187,8 @@ The first step is to generate the classic configuration files
 mkinitcpio -P
 
 # GRUB installation
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux --recheck $EFI_PART
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux \
+             --recheck $EFI_PART
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
@@ -234,6 +235,7 @@ Finally, we need to regenerate the files with correct configuration.
 ```python
 mkinitcpio -P
 
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux --recheck $EFI_PART --removable
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux \
+             --recheck $EFI_PART --removable
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
