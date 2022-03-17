@@ -27,7 +27,8 @@ Then, we have to :
 - create the subvolumes,
 - and remount it correctly.
 
-Note that the UEFI partition cannot be encrypted, and has to be formatted in FAT.
+Note that we need to create each subfolder of our root filesystem, like /home, /var, etc.
+Thus we can create as many subvolumes as we need (in this example there 
 
 ```python
 # CHANGE THIS WITH YOUR DATA
@@ -41,9 +42,9 @@ mount /dev/mapper/$MAP_NAME /mnt
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@snapshots
-btrfs subvolume create /mnt/@var_log
-btrfs subvolume create /mnt/@var_cache
-btrfs subvolume create /mnt/@var_tmp
+#btrfs subvolume create /mnt/@var_log
+#btrfs subvolume create /mnt/@var_cache
+#btrfs subvolume create /mnt/@var_tmp
 umount /mnt
 
 # Second mount, with correct options
