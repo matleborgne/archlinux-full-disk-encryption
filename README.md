@@ -91,7 +91,7 @@ ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 # Locales
 sed -i '/fr_FR.UTF-8/s/^#//g' /etc/locale.gen
 locale-gen
-echo "$LANG" >> /etc/locale.conf
+echo $LANG >> /etc/locale.conf
 
 # Keyboard
 echo "KEYMAP=fr" >> /etc/vconsole.conf
