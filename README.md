@@ -191,7 +191,7 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchL
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-The, the manual configuration.  
+Then, the manual configuration for GRUB.
 This step is crucial. When executing lsblk, note :
 - UUID of your **encrypted** partition (/dev/sda2 for me)
 - UUID of your **mapped** volume (luksRoot)
@@ -212,5 +212,20 @@ GRUB_CMDLINE_LINUX_DEFAULT="\
  root=UUID=$MAPPED_VOLUME_UUID \
  rootflags=subvol=@ \
  cryptkey=rootfs:/etc/keys/keyfile.key"
+```
 
+Note that I indicated a "cryptkey" line, to unlock the root filesystem.
+This is optional, but if you don't do that, you will have to enter your password twice : the first time for GRUB, the second time for your root filesystem.
+
+Then we need to configure the initramfs :
+- adding the btrfs module
+- adding our keyfile to embedded files
+- adding the **encrypt** and **grub-btrfs-overlayfs** hooks
+
+```python
+nano /etc/mkinitcpio.conf
+
+MODULES=(btrfs)
+FILES=("/etc/keys/keyfile.key")
+HOOKS=(base udev autodetect modconf block encrypt filesystems keyboard fsck grub-btrfs-overlayfs)
 ```
