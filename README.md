@@ -7,8 +7,10 @@
 CRYPT="/dev/nvme0n1p2"
 CLEAR="luksRoot"
 
+# LUKS encryption
 cryptsetup luksFormat --type luks1 $CRYPT
 cryptsetup luksOpen $CRYPT $CLEAR
 
+# BTRFS formatting
 mkfs.btrfs /dev/mapper/$CLEAR
 ```
