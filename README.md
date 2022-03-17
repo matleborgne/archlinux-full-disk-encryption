@@ -183,7 +183,7 @@ pacman -S --noconfirm --needed \
 # State of our system
 lsblk -o UUID,NAME,LABEL,MOUNTPOINTS
 ```
-The first part is to generate the classic configuration files
+The first step is to generate the classic configuration files
 
 ```python
 # Initramfs generation
@@ -194,3 +194,11 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchL
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
+The, the manual configuration.  
+It could be done with **sed** commands, but here I prefer to do it manually to avoid mistakes...
+
+```python
+echo "GRUB_ENABLE_CRYPTODISK=y" /etc/default/grub
+
+
+```
