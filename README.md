@@ -192,19 +192,25 @@ grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 The, the manual configuration.  
-This step is crucial. Note :
+This step is crucial. When executing lsblk, note :
 - UUID of your **encrypted** partition (/dev/sda2 for me)
 - UUID of your **mapped** volume (luksRoot)
 
 ```python
 # State of our system
 lsblk -o UUID,NAME,LABEL,MOUNTPOINTS
-# Note the UUID of your
 
 # Activate the ability of GRUB to decrypt LUKS-1 on boot
 echo "GRUB_ENABLE_CRYPTODISK=y" /etc/default/grub
 
 # Configure the boot options to tell GRUB how to boot your system
+nano /etc/default GRUB
 
+# Change GRUB_CMDLINE_LINUX_DEFAULT line with :
+GRUB_CMDLINE_LINUX_DEFAULT="\
+ cryptdevice=UUID=$ENCRYPTED_PARTITION_UUID:luksRoot \
+ root=UUID=$MAPPED_VOLUME_UUID \
+ rootflags=subvol=@ \
+ cryptkey=rootfs:/etc/keys/keyfile.key"
 
 ```
