@@ -204,7 +204,7 @@ lsblk -o UUID,NAME,LABEL,MOUNTPOINTS
 echo "GRUB_ENABLE_CRYPTODISK=y" /etc/default/grub
 
 # Configure the boot options to tell GRUB how to boot your system
-nano /etc/default GRUB
+nano /etc/default/grub
 
 # Change GRUB_CMDLINE_LINUX_DEFAULT line with :
 GRUB_CMDLINE_LINUX_DEFAULT="\
