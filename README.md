@@ -28,7 +28,7 @@ Then, we have to :
 - and remount it correctly.
 
 Note that we need to create each subfolder of our root filesystem, like /home, /var, etc.
-Thus we can create as many subvolumes as we need (in this example there 
+Thus we can create as many subvolumes as we need.
 
 ```python
 # CHANGE THIS WITH YOUR DATA
@@ -42,19 +42,23 @@ mount /dev/mapper/$MAP_NAME /mnt
 btrfs subvolume create /mnt/@
 btrfs subvolume create /mnt/@home
 btrfs subvolume create /mnt/@snapshots
-#btrfs subvolume create /mnt/@var_log
-#btrfs subvolume create /mnt/@var_cache
-#btrfs subvolume create /mnt/@var_tmp
+btrfs subvolume create /mnt/@var_log
+btrfs subvolume create /mnt/@var_cache
+btrfs subvolume create /mnt/@var_tmp
 umount /mnt
 
 # Second mount, with correct options
 mount -o $BTRFS_OPTS,subvol=@ /dev/mapper/$MAP_NAME /mnt
+
 mkdir -p /mnt/home
 mount -o $BTRFS_OPTS,subvol=@home /dev/mapper/$MAP_NAME /mnt/home
+
 mkdir -p /mnt/.snapshots
 mount -o $BTRFS_OPTS,subvol=@snapshots /dev/mapper/$MAP_NAME /mnt/.snapshots
+
 mkdir -p /mnt/boot/efi
 mount -o rw,noatime $EFI_PART /mnt/boot/efi
+
 mkdir -p /mnt/var/log
 mount -o $BTRFS_OPTS,subvol=@var_log /dev/mapper/$MAP_NAME /mnt/var/log
 mkdir -p /mnt/var/cache
