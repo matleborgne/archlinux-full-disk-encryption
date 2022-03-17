@@ -1,4 +1,4 @@
-## ArchLinux installation (Full Disk Encryption)
+## ArchLinux installation (BTRFS + Full Disk Encryption)
 
 #### Create LUKS-1 encryption and BTRFS volume
 
