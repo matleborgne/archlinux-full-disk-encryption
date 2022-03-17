@@ -77,3 +77,28 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # Chroot in our system
 arch-chroot /mnt
 ```
+
+#### Configure our system (timezone, locale, hostname, etc.)
+
+```python
+# Timezone
+ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+
+# Locales
+sed -i '/fr_FR.UTF-8/s/^#//g' /etc/locale.gen
+locale-gen
+echo "LANG=fr_FR.UTF-8" >> /etc/locale.conf
+
+# Keyboard
+echo "KEYMAP=fr" >> /etc/vconsole.conf
+
+# Hostname
+echo "arch-zen" >> /etc/hostname
+echo "127.0.0.1 localhost
+::1       localhost
+127.0.1.1 arch-zen" >> /etc/hosts
+
+# Internal clock
+timedatectl set-ntp true
+hwclock --systohc
+```
