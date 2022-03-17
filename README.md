@@ -152,7 +152,7 @@ systemctl enable \
 
 #### Configure our users
 
-Here I will enable root account, and create a user named mathieu.
+Here we will enable root account, and create a user with sudo rights.
 
 ```python
 # CHANGE THIS WITH YOUR DATA
