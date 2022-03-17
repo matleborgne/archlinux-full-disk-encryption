@@ -81,13 +81,17 @@ arch-chroot /mnt
 #### Configure our system (timezone, locale, hostname, etc.)
 
 ```python
+# CHANGE THIS WITH YOUR DATA
+LANG="fr_FR.UTF-8"
+TZ="Europe/Paris"
+
 # Timezone
-ln -sf /usr/share/zoneinfo/Europe/Paris /etc/localtime
+ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 
 # Locales
 sed -i '/fr_FR.UTF-8/s/^#//g' /etc/locale.gen
 locale-gen
-echo "LANG=fr_FR.UTF-8" >> /etc/locale.conf
+echo "$LANG" >> /etc/locale.conf
 
 # Keyboard
 echo "KEYMAP=fr" >> /etc/vconsole.conf
