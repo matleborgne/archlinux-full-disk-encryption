@@ -89,7 +89,7 @@ TZ="Europe/Paris"
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
 
 # Locales
-sed -i '/fr_FR.UTF-8/s/^#//g' /etc/locale.gen
+sed -i "/$LANG/s/^#//g" /etc/locale.gen
 locale-gen
 echo $LANG >> /etc/locale.conf
 
