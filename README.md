@@ -198,7 +198,10 @@ The, the manual configuration.
 It could be done with **sed** commands, but here I prefer to do it manually to avoid mistakes...
 
 ```python
+# Activate the ability of GRUB to decrypt LUKS-1 on boot
 echo "GRUB_ENABLE_CRYPTODISK=y" /etc/default/grub
+
+# Configure the boot options to tell GRUB how to boot your system
 
 
 ```
