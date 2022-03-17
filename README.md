@@ -60,15 +60,20 @@ lsblk
 
 #### Install ArchLinux base system
 
-The next step is to install basic packages for our ArchLinux system.  
-We need at least :
-- **linux** or **linux-lts** (I chose the second one)
-- **linux-firmware**, strongly recommended for compatibility
-- **reflector** to manage our mirrors
-- **btrfs-progs** as we use BTRFS filesystem
+The next step is to :
+- install basic packages for our ArchLinux system,
+- generate the fstab,
+- chroot in our basic system.  
 
 ```python
+# Install basic recommended packages
 pacstrap /mnt base linux-lts linux-firmware reflector \
               sudo rsync nano \
               btrfs-progs
+
+# Generate the fstab
+genfstab -U /mnt >> /mnt/etc/fstab
+
+# Chroot in our system
+arch-chroot /mnt
 ```
