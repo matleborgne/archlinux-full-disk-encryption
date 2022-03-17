@@ -114,7 +114,7 @@ hwclock --systohc
 We can now install the "system packages" we need for the system to work correctly.  
 This part is highly subjective, as you could need some other packages or not need some of them.
 
-In the end, we will have a functional terminal-based system, without desktop environment.
+In the end, we will have a functional terminal-based system (GRUB appart), without desktop environment.
 
 ```python
 # Filesystem packages
@@ -168,4 +168,18 @@ passwd $USER
 # Add the user to sudo users (optional)
 echo $USER" ALL=(ALL) ALL" >> /etc/sudoers.d/$USER
 
+```
+
+#### Full disk encryption
+
+Here is the tricky step : the GRUB configuration for full disk encryption, including /boot
+
+```python
+# Installation of GRUB packages
+pacman -S --noconfirm --needed \
+  grub efibootmgr efitools os-prober \
+  grub-btrfs
+
+# State of our system
+lsblk -o UUID,NAME,LABEL,MOUNTPOINTS
 ```
