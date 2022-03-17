@@ -82,8 +82,10 @@ arch-chroot /mnt
 
 ```python
 # CHANGE THIS WITH YOUR DATA
-LANG="fr_FR.UTF-8"
 TZ="Europe/Paris"
+LANG="fr_FR.UTF-8"
+KEYMAP="fr"
+HOSTNAME="myArch"
 
 # Timezone
 ln -sf /usr/share/zoneinfo/$TZ /etc/localtime
@@ -94,13 +96,13 @@ locale-gen
 echo 'LANG='$LANG >> /etc/locale.conf
 
 # Keyboard
-echo "KEYMAP=fr" >> /etc/vconsole.conf
+echo "KEYMAP="$KEYMAP >> /etc/vconsole.conf
 
 # Hostname
-echo "arch-zen" >> /etc/hostname
+echo $HOSTNAME >> /etc/hostname
 echo "127.0.0.1 localhost
 ::1       localhost
-127.0.1.1 arch-zen" >> /etc/hosts
+127.0.1.1 "$HOSTNAME >> /etc/hosts
 
 # Internal clock
 timedatectl set-ntp true
