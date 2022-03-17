@@ -7,7 +7,7 @@ If you want an **encrypted boot**, you have to choose the **luks1** type, as GRU
 
 Then, inside this encrypted partition, we create a BTRFS filesystem.
 
-```python
+```ini
 # CHANGE THIS WITH YOUR DATA
 DISK_NAME="/dev/sda2"
 MAP_NAME="luksRoot"
@@ -30,7 +30,7 @@ Then, we have to :
 Note that we need to create each subfolder of our root filesystem, like /home, /var, etc.  
 Thus we can create as many subvolumes as we need (like /var, /var/log, /var/tmp, etc.)
 
-```python
+```ini
 # CHANGE THIS WITH YOUR DATA
 BTRFS_OPTS="rw,noatime,ssd,compress=zstd,commit=120"
 EFI_PART="/dev/sda1"
@@ -65,7 +65,7 @@ The next step is to :
 - generate the fstab,
 - chroot in our basic system.  
 
-```python
+```ini
 # Install basic recommended packages
 pacstrap /mnt base linux-lts linux-firmware reflector \
               sudo rsync nano \
@@ -80,7 +80,7 @@ arch-chroot /mnt
 
 #### Configure our system (timezone, locale, hostname, etc.)
 
-```python
+```ini
 # CHANGE THIS WITH YOUR DATA
 TZ="Europe/Paris"
 LANG="fr_FR.UTF-8"
@@ -116,7 +116,7 @@ This part is highly subjective, as you could need some other packages or not nee
 
 In the end, we will have a functional terminal-based system (GRUB appart), without desktop environment.
 
-```python
+```ini
 # Filesystem packages
 pacman -S --noconfirm --needed \
   ntfs-3g dosfstools usbutils sshfs
@@ -154,7 +154,7 @@ systemctl enable \
 
 Here we will enable root account, and create a user with sudo rights.
 
-```python
+```ini
 # CHANGE THIS WITH YOUR DATA
 USER="mathieu"
 
@@ -174,7 +174,7 @@ echo $USER" ALL=(ALL) ALL" >> /etc/sudoers.d/$USER
 
 Here is the tricky step : the GRUB configuration for full disk encryption, including /boot
 
-```python
+```ini
 # Installation of GRUB packages
 pacman -S --noconfirm --needed \
   grub efibootmgr efitools os-prober \
@@ -182,7 +182,7 @@ pacman -S --noconfirm --needed \
 ```
 The first step is to generate the classic configuration files
 
-```python
+```ini
 # Initramfs generation
 mkinitcpio -P
 
@@ -197,7 +197,7 @@ This step is crucial. When executing lsblk, note :
 - UUID of your **encrypted** partition (/dev/sda2 for me)
 - UUID of your **mapped** volume (luksRoot)
 
-```python
+```ini
 # State of our system
 lsblk -o UUID,NAME,LABEL,MOUNTPOINTS
 
@@ -223,7 +223,7 @@ Then we need to configure the initramfs :
 - adding our keyfile to embedded files
 - adding the **encrypt** and **grub-btrfs-overlayfs** hooks
 
-```python
+```ini
 nano /etc/mkinitcpio.conf
 
 MODULES=(btrfs)
@@ -232,7 +232,8 @@ HOOKS=(base udev autodetect modconf block encrypt filesystems keyboard fsck grub
 ```
 
 Finally, we need to regenerate the files with correct configuration.
-```python
+
+```ini
 mkinitcpio -P
 
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux \
