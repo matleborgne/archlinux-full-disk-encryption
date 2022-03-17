@@ -119,4 +119,31 @@ This part is highly subjective, as you could need some other packages or not nee
 pacman -S --noconfirm --needed \
   ntfs-3g dosfstools usbutils sshfs
 
+# Basic tools
+pacman -S --noconfirm --needed \
+  base-devel arch-install-scripts pacman-contrib \
+  git cryptsetup vi less wget flatpak smartmontools sysfsutils \
+  htop fish rsync neofetch lsb-release rpm-tools \
+  openssh upower archlinux-keyring
+
+# Network, printing, sound, security
+pacman -S --noconfirm --needed \
+  networkmanager openvpn openssl networkmanager-openvpn \
+  cups cups-filters \
+  sof-firmware alsa-{firmware,plugins,utils} pipewire-{alsa,pulse,jack,media-session} \
+  nftables firewalld tldr
+
+# Video
+pacman -S --noconfirm --needed amd-ucode xf86-video-amdgpu    #AMD
+#pacman -S --noconfirm --needed intel-ucode xf86-video-intel   #INTEL
+#pacman -S --noconfirm --needed nvidia-{lts,settings,utils} libvdpau libva-vdpau-driver   #NVIDIA
+
+# Battery (for laptops)
+pacman -S --noconfirm --needed tlp tlp-rdw powertop
+
+# Service activation (systemd)
+systemctl enable \
+  sshd reflector.timer fstrim.timer \
+  NetworkManager cups.service firewalld \
+  tlp
 ```
