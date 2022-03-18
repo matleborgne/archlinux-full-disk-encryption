@@ -319,8 +319,8 @@ Note two important things here :
 
 For these 2 points, it is recommended to have the following "slot" order for the encrypted partition :
 
-Number | Start (sector) | End (sector) |    Size    | Code |        Name         |
--------|----------------|--------------|------------|------|---------------------|
-   1   |   2048         |   4095       | 1024.0 KiB | EF02 | BIOS boot partition |
-   2   |   4096         |   1130495    | 550.0 MiB  | EF00 | EFI System          |
-   3   |   1130496      |   976773134  | 465.2 GiB  | 8309 | Linux LUKS          |
+Key Slot | Type       | Layout          |
+---------|------------|-----------------|
+   0     | password   | qwerty          |
+   1     | keyfile    | -               |
+   2     | password   | azerty (for me) |
