@@ -41,7 +41,7 @@ cfdisk /dev/sda
 ```
 Number |    Size    |        Name         |
 -------|------------|---------------------|
-   1   | 550.0 MiB  | EFI System          |
+   1   | 256.0 MiB  | EFI System          |
    2   |   1.8 TiB  | Linux filesystem    |
 
 
