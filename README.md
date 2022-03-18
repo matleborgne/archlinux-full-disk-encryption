@@ -269,6 +269,8 @@ GRUB_CMDLINE_LINUX_DEFAULT="\
 Note that I indicated a "cryptkey" line, to unlock the root filesystem.
 This is optional, but if you don't do that, you will have to enter your password twice : the first time for GRUB, the second time for your root filesystem.
 
+If you don't want that optional part, just remove the "cryptkey" line.
+
 Then we need to configure the initramfs :
 - adding the btrfs module
 - adding our keyfile to embedded files
@@ -290,4 +292,20 @@ mkinitcpio -P
 grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchLinux \
              --recheck $EFI_PART --removable
 grub-mkconfig -o /boot/grub/grub.cfg
+```
+
+### Optional : Generate a keyfile to unlock the encrypted partition
+
+We will use **openssl** to generate the keyfile (this can also be done with **dd** or other methods).
+
+```ini
+# Install openssl
+pacman -S openssl
+
+# Create the folder and securize it
+mkdir /keys && chmod 700 /keys
+
+# Generate the keyfile
+openssl genrsa -out /etc/keys/keyfile.key 2048
+chmod 600 /etc/keys/keyfile.key
 ```
