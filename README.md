@@ -314,8 +314,8 @@ chmod 600 /etc/keys/keyfile.key
 After the keyfile is generated, we will add it to the list of keys granted by our encrypted partition.
   
 Note two important things here :
-1- the unlocking at boot can be long, especially if the encrypted partition has many keys. The reason is that keys have a "slot" (they are ordered), and cryptsetup will test them one by one, beginning with slot 0 ;
-2- the keyboard layout when entering the password will be US-layout, so qwerty.
+- the unlocking at boot can be long, especially if the encrypted partition has many keys. The reason is that keys have a "slot" (they are ordered), and cryptsetup will test them one by one, beginning with slot 0 ;
+- the keyboard layout when entering the password will be US-layout, so qwerty.
 
 For these 2 points, it is recommended to have the following "slot" order for the encrypted partition :
 
@@ -324,3 +324,10 @@ Key Slot | Type       | Layout          |
    0     | password   | qwerty          |
    1     | keyfile    | -               |
    2     | password   | azerty (for me) |
+   
+   ```ini
+   # Check Key Slots - ENABLED means occupied, DISABLED means free
+   cryptsetup luksDump /dev/sda2
+   
+   
+   ```
