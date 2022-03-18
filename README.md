@@ -1,6 +1,6 @@
 ## ArchLinux installation (BTRFS + Full-disk Encryption)
 
-#### Preface
+### Preface
 
 This guide provides instructions for an Arch Linux installation with full-disk encryption via BTRFS on LUKS, in order to protect your system against hacking by kernel image or initramfs modification.
 
@@ -19,7 +19,7 @@ sda            |  8:0    |  0  |   1.8T |  0  | disk  |             |
 ..             |         |  0  |        |  0  |       | /           |
 
 
-#### Prepare the installer
+### Prepare the installer
 
 First step is connect to the [internet](https://wiki.archlinux.org/index.php/installation_guide#Connect_to_the_internet).  
 
@@ -32,7 +32,7 @@ loadkeys fr
 timedatectl set-ntp true
 ```
 
-#### Create disk table and partitions
+### Create disk table and partitions
 
 Use `fdisk`, `gdisk` or `cfdisk` to create a GPT partition table and the following partitions.
 I will use
@@ -51,7 +51,7 @@ mkfs.vfat -F32 /dev/sda1
 
 
 
-#### Create LUKS-1 encryption and BTRFS volume
+### Create LUKS-1 encryption and BTRFS volume
 
 The first step is to create the LUKS encrypted partition.
 If you want an **encrypted boot**, you have to choose the **luks1** type, as GRUB is not able to decrypt luks2 for now (see [documentation](https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#Preparing_the_disk_5) for more details).
@@ -71,7 +71,7 @@ cryptsetup luksOpen $CRYPT $MAP_NAME
 mkfs.btrfs /dev/mapper/$MAP_NAME
 ```
 
-#### Create BTRFS subvolumes and correctly mount on /mnt
+### Create BTRFS subvolumes and correctly mount on /mnt
 
 Then, we have to :
 - mount the BTRFS partition on /mnt,
@@ -109,7 +109,7 @@ mount -o rw,noatime $EFI_PART /mnt/boot/efi
 lsblk
 ```
 
-#### Install ArchLinux base system
+### Install ArchLinux base system
 
 The next step is to :
 - install basic packages for our ArchLinux system,
@@ -129,7 +129,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 arch-chroot /mnt
 ```
 
-#### Configure our system (timezone, locale, hostname, etc.)
+### Configure our system (timezone, locale, hostname, etc.)
 
 ```ini
 # CHANGE THIS WITH YOUR DATA
@@ -160,7 +160,7 @@ timedatectl set-ntp true
 hwclock --systohc
 ```
 
-#### Install our system packages
+### Install our system packages
 
 We can now install the "system packages" we need for the system to work correctly.  
 This part is highly subjective, as you could need some other packages or not need some of them.
@@ -201,7 +201,7 @@ systemctl enable \
   tlp
 ```
 
-#### Configure our users
+### Configure our users
 
 Here we will enable root account, and create a user with sudo rights.
 
@@ -221,7 +221,7 @@ echo $USER" ALL=(ALL) ALL" >> /etc/sudoers.d/$USER
 
 ```
 
-#### Full disk encryption in GRUB configuration
+### Full disk encryption in GRUB configuration
 
 Here is the tricky step : the GRUB configuration for full disk encryption, including /boot
 
