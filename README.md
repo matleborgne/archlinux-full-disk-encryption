@@ -19,6 +19,33 @@ sda            |  8:0    |  0  |   1.8T |  0  | disk  |             |
 ..             |         |  0  |        |  0  |       | /           |
 
 
+#### Prepare the installer
+
+First step is connect to the [internet](https://wiki.archlinux.org/index.php/installation_guide#Connect_to_the_internet).  
+
+Then, configure the installer according to your needs
+```ini
+# Change installer keyboard layout
+loadkeys fr
+
+# Update the system clock
+timedatectl set-ntp true
+```
+
+#### Create disk table and partitions
+
+Use `fdisk`, `gdisk` or `cfdisk` to create a GPT partition table and the following partitions.
+I will use
+```
+cfdisk /dev/sda
+```
+Number |    Size    |        Name         |
+-------|------------|---------------------|
+   1   | 550.0 MiB  | EFI System          |
+   2   | 465.2 GiB  | Linux filesystem    |
+
+
+
 #### Create LUKS-1 encryption and BTRFS volume
 
 The first step is to create the LUKS encrypted partition.
