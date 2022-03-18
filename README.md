@@ -1,4 +1,23 @@
-## ArchLinux installation (BTRFS + Full Disk Encryption)
+## ArchLinux installation (BTRFS + Full-disk Encryption)
+
+#### Preface
+
+This guide provides instructions for an Arch Linux installation with full-disk encryption via BTRFS on LUKS, in order to protect your system against hacking by kernel image or initramfs modification.
+
+For more information, refer to the ArchLinux wiki for :
+- [ArchLinux general installation guide](https://wiki.archlinux.org/title/Installation_guide)
+- [Archlinux encrypting BTRFS](https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#Btrfs_subvolumes_with_swap)
+
+The final result of `lsblk` will be :
+NAME           | MAJ:MIN | RM  |  SIZE  | RO  | TYPE  | MOUNTPOINT  |
+---------------|---------|-----|--------|-----|-------|-------------|
+sda            |  8:0    |  0  |   1.8T |  0  | disk  |             |
+├─sda1         |  8:1    |  0  |   256M |  0  | part  | /efi        |
+├─sda2         |  8:2    |  0  |   1.8T |  0  | part  |             |
+..└─luksRoot   |  254:0  |  0  |   1.8T |  0  | crypt | /home       |
+..             |         |  0  |        |  0  |       | /.snapshots |
+..             |         |  0  |        |  0  |       | /           |
+
 
 #### Create LUKS-1 encryption and BTRFS volume
 
@@ -104,7 +123,7 @@ echo "127.0.0.1 localhost
 ::1       localhost
 127.0.1.1 "$HOSTNAME >> /etc/hosts
 
-# Internal clock
+# Internal clock set to UTC
 timedatectl set-ntp true
 hwclock --systohc
 ```
