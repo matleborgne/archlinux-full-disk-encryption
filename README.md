@@ -54,7 +54,7 @@ mkfs.vfat -F32 /dev/sda1
 #### Create LUKS-1 encryption and BTRFS volume
 
 The first step is to create the LUKS encrypted partition.
-If you want an **encrypted boot**, you have to choose the **luks1** type, as GRUB is not able to decrypt luks2 for now (see luks documentation for more details).
+If you want an **encrypted boot**, you have to choose the **luks1** type, as GRUB is not able to decrypt luks2 for now (see luks [documentation](https://wiki.archlinux.org/title/Dm-crypt/Encrypting_an_entire_system#Preparing_the_disk_5) for more details).
 
 Then, inside this encrypted partition, we create a BTRFS filesystem.
 
