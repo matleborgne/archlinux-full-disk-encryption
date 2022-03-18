@@ -245,8 +245,8 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 Then, the manual configuration for GRUB.
 This step is crucial. When executing lsblk, note :
-- UUID of your **encrypted** partition (/dev/sda2 for me)
-- UUID of your **mapped** volume (luksRoot)
+- UUID of your **encrypted** partition (UUID of /dev/sda2 for me)
+- UUID of your **mapped** volume (UUID of luksRoot for me)
 
 ```ini
 # State of our system
