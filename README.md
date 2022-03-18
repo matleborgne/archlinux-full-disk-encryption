@@ -44,6 +44,11 @@ Number |    Size    |        Name         |
    1   | 256.0 MiB  | EFI System          |
    2   |   1.8 TiB  | Linux filesystem    |
 
+Then format the EFI partition
+```ini
+mkfs.vfat -F32 /dev/sda1
+```
+
 
 
 #### Create LUKS-1 encryption and BTRFS volume
