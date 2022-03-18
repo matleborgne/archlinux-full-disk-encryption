@@ -272,9 +272,9 @@ This is optional, but if you don't do that, you will have to enter your password
 If you don't want that optional part, just remove the "cryptkey" line.
 
 Then we need to configure the initramfs :
-- adding the btrfs module
-- adding our keyfile to embedded files
-- adding the **encrypt** and **grub-btrfs-overlayfs** hooks
+- adding the btrfs module,
+- adding our keyfile to embedded files (if a keyfile is used),
+- adding the **encrypt** and **grub-btrfs-overlayfs** hooks.
 
 ```ini
 nano /etc/mkinitcpio.conf
@@ -294,8 +294,9 @@ grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id=ArchL
 grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
-### Optional : Generate a keyfile to unlock the encrypted partition
+### Optional : Generate a keyfile to unlock the root filesystem
 
+Note that you will still be prompted for your password before GRUB appears, as it will be needed to unlock your "boot partition".  
 We will use **openssl** to generate the keyfile (this can also be done with **dd** or other methods).
 
 ```ini
@@ -309,3 +310,17 @@ mkdir /keys && chmod 700 /keys
 openssl genrsa -out /etc/keys/keyfile.key 2048
 chmod 600 /etc/keys/keyfile.key
 ```
+
+After the keyfile is generated, we will add it to the list of keys granted by our encrypted partition.
+  
+Note two important things here :
+1- the unlocking at boot can be long, especially if the encrypted partition has many keys. The reason is that keys have a "slot" (they are ordered), and cryptsetup will test them one by one, beginning with slot 0 ;
+2- the keyboard layout when entering the password will be US-layout, so qwerty.
+
+For these 2 points, it is recommended to have the following "slot" order for the encrypted partition :
+
+Number | Start (sector) | End (sector) |    Size    | Code |        Name         |
+-------|----------------|--------------|------------|------|---------------------|
+   1   |   2048         |   4095       | 1024.0 KiB | EF02 | BIOS boot partition |
+   2   |   4096         |   1130495    | 550.0 MiB  | EF00 | EFI System          |
+   3   |   1130496      |   976773134  | 465.2 GiB  | 8309 | Linux LUKS          |
